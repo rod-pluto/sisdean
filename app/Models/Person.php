@@ -11,6 +11,7 @@ class Person extends Model
         'name',
         'birthdate',
         'voterid',
+        'state',
         'street',
         'neighborhood',
         'city',
