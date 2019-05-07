@@ -12,15 +12,19 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/cadastro-pessoas');
 });
 
 Auth::routes();
-Route::get('/home', 'HomeController@index')->name('home');
 
-Route::namespace('Admin')->prefix('admin')->group(function($adminRoutes) {
+Route::get('/home', function(){
+    return redirect('/cadastro-pessoas');
+});
+
+Route::namespace('Admin')->prefix('admin')->middleware(['auth'])->group(function($adminRoutes) {
     $adminRoutes->resource('pessoas', 'PeopleController',['as' => 'admin']);
-    $adminRoutes->resource('usuarios', 'UsersController',['as' => 'admin']);
+    $adminRoutes->get('perfil', 'UsersController@profile')->name('admin.profile');
+    $adminRoutes->put('perfil/update', 'UsersController@update')->name('admin.profile.update');
 
     $adminRoutes->get('relatorios', 'ReportsController@index')->name('admin.relatorios.index');
     $adminRoutes->post('relatorios/gerar', 'ReportsController@generate_report')->name('admin.relatorios.gerar');
@@ -35,7 +39,3 @@ Route::namespace('Web')->group(function($webRoutes){
 Route::namespace('Endpoints')->prefix('endpoints')->group(function($eptRoutes){
     $eptRoutes->get('cidades/{cidade}', 'PeopleEndpointsController@cidades');
 });
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');

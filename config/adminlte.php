@@ -117,6 +117,11 @@ return [
             'text'        => 'Relatórios',
             'url'         => 'admin/relatorios',
             'icon'        => 'bar-chart',
+        ],
+        [
+            'text'        => 'Perfil',
+            'url'         => 'admin/perfil',
+            'icon'        => 'user',
         ]
     ],
 
